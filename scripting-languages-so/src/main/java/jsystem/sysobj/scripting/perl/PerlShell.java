@@ -7,8 +7,8 @@ import com.aqua.sysobj.conn.CliCommand;
 import com.aqua.sysobj.conn.CliConnection;
 
 /**
- * represent a perl shell. this shell will be executed on a remote remote machine.
- * The shell constractor receive the shell cli connection.
+ * represent a perl shell. this shell will be executed on a remote remote machine. The shell constractor receive the
+ * shell cli connection.
  * <p>
  * The launch method is used to launch the perl using the launch command: perl -de 42.
  * <p>
@@ -18,17 +18,15 @@ import com.aqua.sysobj.conn.CliConnection;
  * @author guy.arieli
  */
 public class PerlShell {
-	private CliConnection connection;
-	
-	private String perlDir;
-	
-	private String perlLaunchCommand = "perl -de 42";
-	
+	protected CliConnection connection;
+	protected String perlDir;
+	protected String perlLaunchCommand = "perl -de 42";
+
 	public PerlShell(CliConnection connection, String perlDir) {
 		this.connection = connection;
 		this.perlDir = perlDir;
 	}
-	
+
 	public void launch() throws Exception {
 		if (!connection.isConnected()) {
 			connection.connect();
@@ -39,9 +37,9 @@ public class PerlShell {
 		cmd = new CliCommand();
 		cmd.setCommands(new String[] { perlLaunchCommand });
 		connection.command(cmd);
-		
+
 	}
-	
+
 	/**
 	 * Execute perl command.
 	 * 
@@ -62,19 +60,19 @@ public class PerlShell {
 			cmd.setErrorString((result.substring(evalStart + "EVL_START**".length(), evalEnd)));
 		}
 	}
-	
+
 	public void executeBasic(String command) {
 		CliCommand cliCommand = new CliCommand();
 		cliCommand.setCommands(new String[] { command });
 		connection.command(cliCommand);
 	}
-	
+
 	public String executeCommand(String command) throws Exception {
 		CliCommand cliCommand = new CliCommand();
-		cliCommand.setCommands(new String[] { "eval { $res = " + command + " } ;", "print \"RES_START**$res**RES_END\"",
-				"print \"EVL_START**$@**EVL_END\"" });
+		cliCommand.setCommands(new String[] { "eval { $res = " + command + " } ;",
+				"print \"RES_START**$res**RES_END\"", "print \"EVL_START**$@**EVL_END\"" });
 		connection.command(cliCommand);
-		
+
 		if (cliCommand.isFailed()) {
 			Exception e = cliCommand.getThrown();
 			if (e != null) {
@@ -82,7 +80,7 @@ public class PerlShell {
 			}
 			throw new Exception("Cli command failed");
 		}
-		
+
 		return cliCommand.getResult();
 	}
 }

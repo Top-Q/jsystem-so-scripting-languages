@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.jsystemtest.systemobjects</groupId>
 	<artifactId>scripting-languages-parent</artifactId>
-	<version>1.0.00</version>
+	<version>1.0.01</version>
 	<packaging>pom</packaging>
 	<properties>
 		<topq.repository.rootUrl>http://maven.top-q.co.il</topq.repository.rootUrl>
